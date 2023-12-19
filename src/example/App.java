@@ -5,17 +5,21 @@ import java.util.List;
 import java.util.Scanner;
 
 import example.dto.Article;
+import example.dto.Member;
 import example.util.Util;
 
 public class App {
 	
 	private List<Article> articles;
-
+	private List<Member> members;
 	private int lastArticleId;
+	private int lastMemberId;
 	
 	public App() {
 		this.articles = new ArrayList<>();
+		this.members = new ArrayList<>();
 		this.lastArticleId = 0;
+		this.lastMemberId = 0;
 	}
 	
 	public void run() {
@@ -38,7 +42,77 @@ public class App {
 				break;
 			}
 			
-			if (cmd.equals("article write")) {
+			if (cmd.equals("member join")) {
+				lastMemberId++;
+				
+				String loginId = null;
+				
+				while (true) {
+					System.out.printf("아이디 : ");
+					loginId = sc.nextLine().trim();
+					
+					if (loginId.length() == 0) {
+						System.out.println("아이디는 필수 입력정보입니다");
+						continue;
+					}
+					
+					boolean isIdDuplicate = false;
+					for (Member member : this.members) {
+						if (member.loginId.equals(loginId)) {
+							isIdDuplicate = true;
+						}
+					}
+					
+					if (isIdDuplicate) {
+						System.out.printf("%s은(는) 이미 사용중인 아이디입니다\n", loginId);
+						continue;
+					}
+					
+					System.out.printf("%s은(는) 사용가능한 아이디입니다\n", loginId);
+					break;
+				}
+				
+				String loginPw = null;
+				String loginPwChk = null;
+				
+				while (true) {
+					System.out.printf("비밀번호 : ");
+					loginPw = sc.nextLine().trim();
+					
+					if (loginPw.length() == 0) {
+						System.out.println("비밀번호는 필수 입력정보입니다");
+						continue;
+					}
+					
+					System.out.printf("비밀번호 확인 : ");
+					loginPwChk = sc.nextLine().trim();
+					
+					if (loginPw.equals(loginPwChk) == false) {
+						System.out.println("비밀번호를 다시 입력해주세요");
+						continue;
+					}
+					
+					break;
+				}
+				
+				String name = null;
+				while (true) {
+					System.out.printf("이름 : ");
+					name = sc.nextLine().trim();
+					
+					if (name.length() == 0) {
+						System.out.println("이름은 필수 입력정보입니다");
+						continue;
+					}
+					
+					break;
+				}
+				
+				this.members.add(new Member(lastMemberId, Util.getDateStr(), loginId, loginPw, name));
+				
+				System.out.printf("%s회원님이 가입되었습니다\n", name);
+			}
+			else if (cmd.equals("article write")) {
 				lastArticleId++;
 				
 				System.out.printf("제목 : ");
@@ -66,7 +140,7 @@ public class App {
 					
 					printArticles = new ArrayList<>();
 					
-					for (Article article : articles) {
+					for (Article article : this.articles) {
 						if (article.title.contains(searchKeyword)) {
 							printArticles.add(article);
 						}
@@ -131,7 +205,7 @@ public class App {
 					continue;
 				}
 				
-				articles.remove(foundArticle);
+				this.articles.remove(foundArticle);
 				System.out.printf("%d번 게시물을 삭제했습니다\n", id);
 			}
 			else {
