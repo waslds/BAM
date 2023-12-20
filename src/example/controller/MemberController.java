@@ -35,14 +35,7 @@ public class MemberController {
 				continue;
 			}
 			
-			boolean isIdDuplicate = false;
-			for (Member member : this.members) {
-				if (member.loginId.equals(loginId)) {
-					isIdDuplicate = true;
-				}
-			}
-			
-			if (isIdDuplicate) {
+			if (isLoginIdDupChk(loginId)) {
 				System.out.printf("%s은(는) 이미 사용중인 아이디입니다\n", loginId);
 				continue;
 			}
@@ -90,5 +83,15 @@ public class MemberController {
 		this.members.add(new Member(lastMemberId, Util.getDateStr(), loginId, loginPw, name));
 		
 		System.out.printf("%s회원님이 가입되었습니다\n", name);
+	}
+	
+	private boolean isLoginIdDupChk(String loginId) {
+		for (Member member : this.members) {
+			if (member.loginId.equals(loginId)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }
