@@ -21,7 +21,7 @@ public class MemberController {
 		this.sc = sc;
 	}
 	
-	public void doAction(String methodName) {
+	public void doAction(String cmd, String methodName) {
 		switch (methodName) {
 		case "join" :
 			doJoin();
