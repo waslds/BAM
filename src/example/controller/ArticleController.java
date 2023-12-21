@@ -20,6 +20,10 @@ public class ArticleController {
 		this.lastArticleId = 0;
 		this.sc = sc;
 	}
+	
+	public void doAction(String methodName) {
+		
+	}
 			
 	public void doWrite() {
 		lastArticleId++;
