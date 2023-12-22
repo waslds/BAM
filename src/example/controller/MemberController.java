@@ -7,20 +7,18 @@ import java.util.Scanner;
 import example.dto.Member;
 import example.util.Util;
 
-public class MemberController {
+public class MemberController extends Controller {
 	
 	private List<Member> members;
 	
 	private int lastMemberId;
 	
-	private Scanner sc;
-	
 	public MemberController(Scanner sc) {
 		this.members = new ArrayList<>();
 		this.lastMemberId = 0;
-		this.sc = sc;
 	}
 	
+	@Override
 	public void doAction(String cmd, String methodName) {
 		switch (methodName) {
 		case "join" :
