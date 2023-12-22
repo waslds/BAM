@@ -42,7 +42,7 @@ public class MemberController extends Controller {
 
 	private void doJoin() {
 		
-		if (this.loginedMember != null) {
+		if (isLogined()) {
 			System.out.println("로그아웃 후 이용해주세요");
 			return;
 		}
@@ -109,10 +109,10 @@ public class MemberController extends Controller {
 		
 		System.out.printf("%s회원님이 가입되었습니다\n", name);
 	}
-	
+
 	private void doLogin() {
 		
-		if (this.loginedMember != null) {
+		if (isLogined()) {
 			System.out.println("로그아웃 후 이용해주세요");
 			return;
 		}
@@ -162,7 +162,7 @@ public class MemberController extends Controller {
 	}
 	
 	private void doLogout() {
-		if (this.loginedMember == null) {
+		if (isLogined() == false) {
 			System.out.println("로그인 후 이용해주세요");
 			return;
 		}
@@ -189,6 +189,10 @@ public class MemberController extends Controller {
 		}
 		
 		return false;
+	}
+	
+	private boolean isLogined() {
+		return this.loginedMember != null;
 	}
 	
 	@Override
